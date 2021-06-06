@@ -61,8 +61,7 @@ if __name__ == '__main__':
         drvs.append(drv.reshape(-1))
         psi_values.append(psi_value.reshape(-1))
 
-
-fig, axes = plt.subplots(1,2)
+fig, axes = plt.subplots(1, 2)
 fig.set_size_inches((10, 10))
 axes = axes.ravel()
 
@@ -71,4 +70,3 @@ axes[0].set_title('derivates')
 axes[1].plot(xs, np.array(ws)[:, 0].tolist())
 axes[1].set_title('ws')
 plt.show()
-
