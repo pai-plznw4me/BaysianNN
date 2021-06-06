@@ -50,9 +50,8 @@ def hessian_psi(y, x, w):
 
 
 def get_posterior(y, x, w_hat):
-    h = -hessian_psi(psi, y, x, w_hat)
-
-    return np.random.normal(w_hat.reshape(-1), 1 / h.reshape(-1), 10000)
+    h = -hessian_psi(y, x, w_hat)
+    return np.random.normal(w_hat.reshape(-1), 1 / h.reshape(-1), 10000), h
 
 
 if __name__ == '__main__':
