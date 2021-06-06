@@ -36,6 +36,25 @@ def psi(y, x, w):
     return np.log(get_prior(w)) + get_loglikelihood(y, x, w)
 
 
+def gardient_psi(y, x, w):
+    delta = 0.00000001
+
+    # gradient descent
+    derivate = (psi(y, x, w + delta) - psi(y, x, w)) / delta
+    return derivate
+
+
+def hessian_psi(y, x, w):
+    delta = 0.00000001
+    return (gardient_psi(y, x, w + delta) - gardient_psi(y, x, w)) / delta
+
+
+def get_posterior(y, x, w_hat):
+    h = -hessian_psi(psi, y, x, w_hat)
+
+    return np.random.normal(w_hat.reshape(-1), 1 / h.reshape(-1), 10000)
+
+
 if __name__ == '__main__':
     # test dataset
     np.random.seed(0)
@@ -47,6 +66,8 @@ if __name__ == '__main__':
     y = y.reshape(-1, 1)
 
     init_w = np.random.normal(0, 1, 1).reshape(1, 1)
+
+    ws = w = np.random.normal(0, 1, 1000)
 
     ws = []
     drvs = []
@@ -69,4 +90,9 @@ axes[0].plot(xs, np.array(drvs)[:, 0].tolist())
 axes[0].set_title('derivates')
 axes[1].plot(xs, np.array(ws)[:, 0].tolist())
 axes[1].set_title('ws')
+plt.show()
+
+zs = get_posterior(y, x, w)
+zs = zs.reshape(-1)
+plt.hist(zs)
 plt.show()
